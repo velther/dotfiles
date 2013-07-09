@@ -10,6 +10,7 @@ export PATH=$HOME/.bin:$HOME/node_modules/.bin:$PATH
 
 alias g='git status'
 alias ga='git add'
+alias gci='git commit'
 alias gl='git pull'
 alias glr='git pull --rebase'
 alias gs='git push'
