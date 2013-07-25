@@ -1,0 +1,20 @@
+# System
+alias la='ls -a'
+alias ll='ls -la'
+alias m='make'
+
+# Git specific
+alias g='git status'
+alias ga='git add'
+alias gam='git ls-files -m | xargs git add'
+alias gau='git ls-files -o --exclude-standard | xargs git add'
+alias grm='git ls-files -d | xargs git rm'
+alias gd='git diff'
+alias gdc='git diff --cached'
+alias gl='git pull'
+alias glr='git pull --rebase'
+alias gs='git push'
+alias gc='git commit'
+alias gco='git checkout'
+alias gls='git ls-files'
+alias gsu='git submodule update'

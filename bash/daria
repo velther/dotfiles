@@ -1,0 +1,39 @@
+# Daria specific
+function make_mail_static() {
+	if [[ -z $@ ]]; then
+		themes=blue
+	else
+		themes=$@
+	fi
+	
+	make THEMES="$themes" PROJECTS="boot jane mail"
+}
+
+function make_lang() {
+	if [[ -z $@ ]]; then
+		langs=ru
+	else
+		langs=$@
+	fi
+	
+	make LANGS="$langs"
+}
+
+function daria_make() {
+	dir=${PWD##*/}
+	dir_full=${PWD}
+	parent_dir=$(basename $(dirname $dir_full))
+
+	if [ $dir == 'neo2' ] || [ $dir == 'mail' ]; then
+		make_lang "$@"
+	elif [[ $dir == 'static' && ($parent_dir == 'neo2' || $parent_dir == 'mail') ]]; then
+		make_mail_static "$@"
+	else
+		make $@
+	fi
+}
+
+
+alias m=daria_make
+alias mst=make_mail_static
+alias ml=make_lang

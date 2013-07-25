@@ -1,0 +1,37 @@
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+[alias]
+        co = checkout
+        ci = commit
+        st = status
+        s = status
+        d = diff
+        b = branch
+        f = fetch
+        p = pull
+        m = merge
+        a = add
+        cp = cherry-pick
+        ls = ls-files
+        lsu = git ls-files -o --exclude-standard
+        #up = !(git pull || ((git stash && git pull --rebase >&2) | grep -v "No local changes to save" && git stash pop))
+        #up = !(git stash && git pull --rebase >&2) | grep -v \"No local changes to save\" && git stash pop
+        #u  = !git up
+        #re  = "!f() { git reset $1; git checkout $1; }; f; f"
+        #re  = "!f() { git reset $1; git checkout $1; git reset $1; git checkout $1; }; f"
+        #re1  = "!f() { git reset $1; git checkout $1; }; f"
+        #ups = !(git fetch upstream && git merge upstream/master)
+        #upd = !(git fetch && git merge origin/dev)
+        #du = !(git fetch upstream && git diff upstream/master)
+        #dd = !(git fetch && git diff origin/dev)
+[core]
+        editor = vim
+[user]
+        email = moodruck@github.com
+        name = moodruck
+[push]
+        default = current
+[credential]
+	helper = cache --timeout=8640000
