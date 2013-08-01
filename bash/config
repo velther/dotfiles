@@ -1,1 +1,14 @@
+# Prompt
+__git_ps1()
+{
+    local b="$(git symbolic-ref HEAD 2>/dev/null)"
+        if [ -n "$b" ]; then
+            if [ -n "$1" ]; then
+                printf "$1" "${b##refs/heads/}"
+            else
+                printf " (%s)" "${b##refs/heads/}"
+            fi
+        fi
+}
+
 export PS1='\[$(tput setaf 4)\]\w`__git_ps1 "\[$(tput setaf 9)\](\[$(tput setaf 1)\]%s\[$(tput setaf 9)\])\[$(tput setaf 4)\]"` \$ \[$(tput setaf 9)\]'
