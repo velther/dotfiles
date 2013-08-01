@@ -1,4 +1,5 @@
 [color]
+        ui = true
         diff = auto
         status = auto
         branch = auto
@@ -34,4 +35,4 @@
 [push]
         default = current
 [credential]
-	helper = cache --timeout=8640000
+        helper = cache --timeout=8640000

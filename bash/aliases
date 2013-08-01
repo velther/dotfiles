@@ -1,4 +1,5 @@
 # System
+alias ls='ls -F'
 alias la='ls -a'
 alias ll='ls -la'
 alias m='make'
@@ -17,4 +18,7 @@ alias gs='git push'
 alias gc='git commit'
 alias gco='git checkout'
 alias gls='git ls-files'
+alias glsu='git ls-files -o --exclude-standard'
 alias gsu='git submodule update'
+alias glg='git log'
+alias gll='git log -1 -p'
