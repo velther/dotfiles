@@ -59,7 +59,7 @@ __git_branch_color ()
     fi
 
     local b_info=$(git branch -v 2>/dev/null | grep __git_branch_name)
-    if [[ $brinfo =~ ("[ahead "([[:digit:]]*)]) ]]; then
+    if [[ $b_info =~ ("[ahead "([[:digit:]]*)]) ]]; then
         c=$yellow
     fi
 
