@@ -22,12 +22,16 @@
 # Cyan    36   46
 # White   37   47
 
-
+__git_branch_name ()
+{
+    local b=$(git symbolic-ref HEAD 2>/dev/null)
+    echo "${b##*/}"
+}
 __git_ps1 ()
 {
-    local b="$(git symbolic-ref HEAD 2>/dev/null)"
+    local b=`__git_branch_name`
     if [ -n "$b" ]; then
-        printf "(%s)" "${b##*/}"
+        printf "($b)"
     else
         local sha="$(git rev-parse --short HEAD 2>/dev/null)"
         if [ -n "$sha" ]; then
@@ -35,23 +39,27 @@ __git_ps1 ()
         fi
     fi
 }
+
 __prompt ()
 {
     local blue='\[\e[34m\]'
     local green='\[\e[32m\]'
     local red='\[\e[31m\]'
+    local yellow='\[\e[33m\]'
     local esc_color='\[\e[0m\]'
-
     local c=$esc_color
-    local is_change="$(git diff-index --name-only HEAD 2>/dev/null)"
 
-    # if string $is_change is empty
-    # that means repo has ho changes
-    if [ -n "$is_change" ]; then
-        c=$green
-    else
+    local st=$(git status 2>/dev/null | tail -n 1)
+    if [[ $st != "nothing to commit (working directory clean)" ]]; then
         c=$red
+    else
+        c=$green
     fi
+
+    # local b_info=$(git branch -v 2>/dev/null | grep __git_branch_name)
+    # if [[ $brinfo =~ ("[ahead "([[:digit:]]*)]) ]]; then
+    #     c=$yellow
+    # fi
 
     printf $blue'\w'$c' `__git_ps1` '$blue'$ '$esc_color
 }
