@@ -1,19 +1,60 @@
-# Prompt
-#export PS1='\[$(tput setaf 4)\]\w`__git_ps1 "\[$(tput setaf 9)\](\[$(tput setaf 1)\]%s\[$(tput setaf 9)\])\[$(tput setaf 4)\]"` \$ \[$(tput setaf 9)\]'
+# Bash colors
 
-# Vars
-PathShort='\w'
+## Usage
+## echo -e "\033[COLORm"
+##             or
+## printf "\e[COLORm"
+##
+## color escaping in PS1
+## \[\033[COLORm\]
+
+# Reset color 0
+
+## Regular Colors
+#         fg   bg
+#-----------------
+# Black   30   40
+# Red     31   41
+# Green   32   42
+# Yellow  33   43
+# Blue    34   44
+# Purple  35   45
+# Cyan    36   46
+# White   37   47
+
+
+__git_ps1 ()
+{
+    local b="$(git symbolic-ref HEAD 2>/dev/null)"
+    if [ -n "$b" ]; then
+        printf "(%s)" "${b##*/}"
+    else
+        local sha="$(git rev-parse --short HEAD 2>/dev/null)"
+        if [ -n "$sha" ]; then
+            printf "{$sha}"
+        fi
+    fi
+}
+__prompt ()
+{
+    local blue='\[\e[34m\]'
+    local green='\[\e[32m\]'
+    local red='\[\e[31m\]'
+    local esc_color='\[\e[0m\]'
+
+    local c=$esc_color
+    local is_change="$(git diff-index --name-only HEAD 2>/dev/null)"
+
+    # if string $is_change is empty
+    # that means repo has ho changes
+    if [ -n "$is_change" ]; then
+        c=$green
+    else
+        c=$red
+    fi
+
+    printf $blue'\w'$c' `__git_ps1` '$blue'$ '$esc_color
+}
 
 # Prompt
-export PS1=$Blue$PathShort$Color_Off'$(git branch &>/dev/null;\
-if [ $? -eq 0 ]; then \
-  echo "$(echo `git status` | grep "nothing to commit" > /dev/null 2>&1; \
-  if [ "$?" -eq "0" ]; then \
-    # @4 - Clean repository - nothing to commit
-    echo "'$Green'"$(__git_ps1 " (%s)"); \
-  else \
-    # @5 - Changes to working tree
-    echo "'$Red'"$(__git_ps1 " (%s)"); \
-  fi)"; \
-fi)\
-'$Blue' \$ '$Color_Off
+export PS1=`__prompt`
