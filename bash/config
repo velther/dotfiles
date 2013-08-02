@@ -27,7 +27,7 @@ __git_branch_name ()
     local b=$(git symbolic-ref HEAD 2>/dev/null)
     echo "${b##*/}"
 }
-__git_ps1 ()
+__git_prompt ()
 {
     local b=`__git_branch_name`
     if [ -n "$b" ]; then
@@ -40,28 +40,37 @@ __git_ps1 ()
     fi
 }
 
+__git_branch_color ()
+{
+    local red='31'
+    local green='32'
+    local yellow='33'
+    local esc_color='0'
+    local c=$esc_color
+
+    local b=`__git_branch_name`
+    if [ -n "$b" ]; then
+        local st=$(git status 2>/dev/null | grep "nothing to commit")
+        if [ -n "$st" ]; then
+            c=$green
+        else
+            c=$red
+        fi
+    fi
+
+    local b_info=$(git branch -v 2>/dev/null | grep __git_branch_name)
+    if [[ $brinfo =~ ("[ahead "([[:digit:]]*)]) ]]; then
+        c=$yellow
+    fi
+
+    echo $c
+}
 __prompt ()
 {
     local blue='\[\e[34m\]'
-    local green='\[\e[32m\]'
-    local red='\[\e[31m\]'
-    local yellow='\[\e[33m\]'
     local esc_color='\[\e[0m\]'
-    local c=$esc_color
 
-    local st=$(git status 2>/dev/null | tail -n 1)
-    if [[ $st != "nothing to commit (working directory clean)" ]]; then
-        c=$red
-    else
-        c=$green
-    fi
-
-    # local b_info=$(git branch -v 2>/dev/null | grep __git_branch_name)
-    # if [[ $brinfo =~ ("[ahead "([[:digit:]]*)]) ]]; then
-    #     c=$yellow
-    # fi
-
-    printf $blue'\w'$c' `__git_ps1` '$blue'$ '$esc_color
+    printf $blue'\w \[\e[`__git_branch_color`m\]`__git_prompt` '$blue'$ '$esc_color
 }
 
 # Prompt
