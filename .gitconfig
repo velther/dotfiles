@@ -29,6 +29,7 @@
         #dd = !(git fetch && git diff origin/dev)
 [core]
         editor = vim
+        excludesfile = /home/moodruck/.gitignore
 [user]
         email = moodruck@github.com
         name = moodruck
