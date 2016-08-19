@@ -23,55 +23,77 @@ ulimit -n 4096
 # Cyan    36   46
 # White   37   47
 
+blue='\e[34m'
+red='\e[31m'
+green='\e[32m'
+yellow='\e[33m'
+cyan='\e[36m'
+black="\e[30m";
+orange="\e[33m";
+purple="\e[35m";
+violet="\e[35m";
+white="\e[37m";
+yellow="\e[33m";
+esc_color='\e[0m'
+
 __git_branch_name ()
 {
     local b=$(git symbolic-ref HEAD 2>/dev/null)
     echo "${b##*/}"
 }
+
+__git_branch_color ()
+{
+    local c=$green
+    local b=`__git_branch_name`
+    if [ -n "$b" ]; then
+        # Ensure the index is up to date.
+        git update-index --really-refresh -q &>/dev/null;
+
+        # Check for uncommitted changes in the index.
+        if ! $(git diff --quiet --ignore-submodules --cached); then
+            c=$yellow
+        fi;
+
+        # Check for unstaged changes.
+        if ! $(git diff-files --quiet --ignore-submodules --); then
+            c=$orange
+        fi;
+
+        # Check for untracked files.
+        if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+            c=$red
+        fi;
+
+        # Check for stashed files.
+        #if $(git rev-parse --verify refs/stash &>/dev/null); then
+        #fi;
+    fi
+
+    #local b_info=$(git branch -v 2>/dev/null | grep __git_branch_name)
+    #if [[ $b_info =~ ("[ahead "([[:digit:]]*)]) ]]; then
+    #    c=$yellow
+    #fi
+
+    echo $c
+}
+
 __git_prompt ()
 {
     local b=`__git_branch_name`
     if [ -n "$b" ]; then
-        printf "($b)"
+        printf $white'('`__git_branch_color`$b$white')'
     else
         local sha="$(git rev-parse --short HEAD 2>/dev/null)"
         if [ -n "$sha" ]; then
-            printf "{$sha}"
+            printf $white'{'$blue$sha$white'}'
         fi
     fi
 }
 
-__git_branch_color ()
-{
-    local red='31'
-    local green='32'
-    local yellow='33'
-    local esc_color='0'
-    local c=$esc_color
-
-    local b=`__git_branch_name`
-    if [ -n "$b" ]; then
-        local st=$(git status 2>/dev/null | grep "nothing to commit")
-        if [ -n "$st" ]; then
-            c=$green
-        else
-            c=$red
-        fi
-    fi
-
-    local b_info=$(git branch -v 2>/dev/null | grep __git_branch_name)
-    if [[ $b_info =~ ("[ahead "([[:digit:]]*)]) ]]; then
-        c=$yellow
-    fi
-
-    echo $c
-}
 __prompt ()
 {
-    local blue='\[\e[34m\]'
-    local esc_color='\[\e[0m\]'
-
-    printf $blue'\w \[\e[`__git_branch_color`m\]`__git_prompt` '$blue'$ '$esc_color
+    printf $blue'\w `__git_prompt` '$blue'\n$ '$esc_color
 }
 
 # Prompt
