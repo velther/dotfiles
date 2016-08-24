@@ -28,3 +28,4 @@ alias glsu='git ls-files -o --exclude-standard'
 alias gsu='git submodule update'
 alias glg='git log'
 alias gll='git log -1 -p'
+#git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative AVPM-25714-onboarding-tooltip..AVPM-27431-srf-main
