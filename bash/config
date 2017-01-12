@@ -23,7 +23,6 @@ ulimit -n 4096
 # Cyan    36   46
 # White   37   47
 
-bold='';
 reset='\[\[\e[0m\]';
 black='\[\e[0;30m\]';
 blue='\[\e[0;34m\]';
@@ -42,47 +41,40 @@ __git_branch_name ()
     echo "${b##*/}"
 }
 
-__git_branch_color ()
+__prompt_git ()
 {
-    local c=$green
     local b=`__git_branch_name`
+    local c="${7}"
     if [ -n "$b" ]; then
         # Ensure the index is up to date.
         git update-index --really-refresh -q &>/dev/null;
 
         # Check for unpushed commits
-        if [ -n "$(git branch -v 2>/dev/null | grep '^*' | grep '\\\[ahead')"]; then
-            c=$cyan
+        local branch=$(git branch -v 2>/dev/null | grep '^*')
+        if [[ branch =~ ("[ahead "([[:digit:]]*)]) ]]; then
+            c="${3}"
         fi;
 
         # Check for uncommitted changes in the index.
         if ! $(git diff --quiet --ignore-submodules --cached); then
-            c=$yellow
+            c="${4}"
         fi;
 
         # Check for unstaged changes.
         if ! $(git diff-files --quiet --ignore-submodules --); then
-            c=$orange
+            c="${5}"
         fi;
 
         # Check for untracked files.
         if [ -n "$(git ls-files --others --exclude-standard)" ]; then
-            c=$red
+            c="${6}"
         fi;
-    fi
 
-    echo $c
-}
-
-__prompt_git ()
-{
-    local b=`__git_branch_name`
-    if [ -n "$b" ]; then
-        echo "${2}(${1}$b${2})"
+        echo "${1}(${c}$b${1})"
     else
         local sha="$(git rev-parse --short HEAD 2>/dev/null)"
         if [ -n "$sha" ]; then
-            echo "${2}{${3}${sha}${2}}"
+            echo "${1}{${2}${sha}${1}}"
         fi
     fi
 }
@@ -90,7 +82,7 @@ __prompt_git ()
 bc=`__git_branch_color`
 # Prompt
 PS1="${blue}\w "
-PS1+="\$(__prompt_git \"${bc}\" \"${white}\" \"${blue}\")"
+PS1+="\$(__prompt_git \"${white}\" \"${blue}\" \"${cyan}\" \"${yellow}\" \"${orange}\" \"${red}\" \"${green}\")\n"
 PS1+="${blue} $ ${reset}"
 export PS1
 
