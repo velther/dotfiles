@@ -44,16 +44,10 @@ __git_branch_name ()
 __prompt_git ()
 {
     local b=`__git_branch_name`
-    local c="${7}"
+    local c="${3}"
     if [ -n "$b" ]; then
         # Ensure the index is up to date.
         git update-index --really-refresh -q &>/dev/null;
-
-        # Check for unpushed commits
-        local branch=$(git branch -v 2>/dev/null | grep '^*')
-        if [[ branch =~ ("[ahead "([[:digit:]]*)]) ]]; then
-            c="${3}"
-        fi;
 
         # Check for uncommitted changes in the index.
         if ! $(git diff --quiet --ignore-submodules --cached); then
@@ -82,7 +76,7 @@ __prompt_git ()
 bc=`__git_branch_color`
 # Prompt
 PS1="${blue}\w "
-PS1+="\$(__prompt_git \"${white}\" \"${blue}\" \"${cyan}\" \"${yellow}\" \"${orange}\" \"${red}\" \"${green}\")\n"
+PS1+="\$(__prompt_git \"${white}\" \"${blue}\" \"${cyan}\" \"${yellow}\" \"${orange}\" \"${red}\")\n"
 PS1+="${blue} $ ${reset}"
 export PS1
 
