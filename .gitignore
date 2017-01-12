@@ -1,2 +1,4 @@
 bash/job
+*.sublime-project
+*.sublime-workspace
 
