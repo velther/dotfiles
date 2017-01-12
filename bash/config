@@ -23,35 +23,19 @@ ulimit -n 4096
 # Cyan    36   46
 # White   37   47
 
-#if tput setaf 1 &> /dev/null; then
-   # tput sgr0; # reset colors
-   # bold=$(tput bold);
-   # reset=$(tput sgr0);
-   # # Solarized colors, taken from http://git.io/solarized-colors.
-   # black=$(tput setaf 0);
-   # blue=$(tput setaf 33);
-   # cyan=$(tput setaf 37);
-   # green=$(tput setaf 64);
-   # orange=$(tput setaf 166);
-   # purple=$(tput setaf 125);
-   # red=$(tput setaf 124);
-   # violet=$(tput setaf 61);
-   # white=$(tput setaf 15);
-   # yellow=$(tput setaf 136);
-#else
-    bold='';
-    reset='\[\[\e[0m\]';
-    black='\[\e[0;30m\]';
-    blue='\[\e[0;34m\]';
-    cyan='\[\e[0;36m\]';
-    green='\[\e[0;32m\]';
-    orange='\[\e[0;33m\]';
-    purple='\[\e[0;35m\]';
-    red='\[\e[0;31m\]';
-    violet='\[\e[0;35m\]';
-    white='\[\e[0;37m\]';
-    yellow='\[\e[0;33m\]';
-#fi;
+bold='';
+reset='\[\[\e[0m\]';
+black='\[\e[0;30m\]';
+blue='\[\e[0;34m\]';
+cyan='\[\e[0;36m\]';
+green='\[\e[0;32m\]';
+orange='\[\e[0;33m\]';
+purple='\[\e[0;35m\]';
+red='\[\e[0;31m\]';
+violet='\[\e[0;35m\]';
+white='\[\e[0;37m\]';
+yellow='\[\e[0;33m\]';
+
 __git_branch_name ()
 {
     local b=$(git symbolic-ref HEAD 2>/dev/null)
