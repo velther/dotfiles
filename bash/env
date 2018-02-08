@@ -1,5 +1,5 @@
 export LANG="en_US.UTF-8"
-export PATH=$HOME/.bin:$HOME/node_modules/.bin:$PATH
+export PATH=$HOME/.bin:$HOME/node_modules/.bin:./node_modules/.bin:$PATH
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
