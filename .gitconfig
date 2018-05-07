@@ -29,10 +29,10 @@
         #dd = !(git fetch && git diff origin/dev)
 [core]
         editor = vim
-        excludesfile = /Users/bbmudruk/.gitignore
+        excludesfile = ~/.gitignore
 [user]
-        email = bmudruk@avito.ru
-        name = Boris Mudruk
+        email = velthers@gmail.com
+        name = velther
 [push]
         default = current
 [credential]

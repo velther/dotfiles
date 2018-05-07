@@ -73,7 +73,6 @@ __prompt_git ()
     fi
 }
 
-bc=`__git_branch_color`
 # Prompt
 PS1="${blue}\w "
 PS1+="\$(__prompt_git \"${white}\" \"${blue}\" \"${cyan}\" \"${yellow}\" \"${orange}\" \"${red}\")\n"
