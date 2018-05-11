@@ -31,8 +31,6 @@
         editor = vim
         excludesfile = ~/.gitignore
 [user]
-        email = velthers@gmail.com
-        name = velther
 [push]
         default = current
 [credential]
