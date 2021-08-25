@@ -1,0 +1,12 @@
+ulimit -n 4096
+
+. ~/dotfiles/modules/git
+
+# black, red, green, yellow, blue, magenta, cyan and white
+# Prompt
+setopt PROMPT_SUBST
+
+PROMPT="${blue}%~ "
+PROMPT+="\$(__prompt_git \"%F{white}\" \"%F{blue}\" \"%F{cyan}\" \"%F{yellow}\" \"%F{magenta}\" \"%F{red}\")"$'\n'
+PROMPT+="%F{blue} $ %f"
+export PROMPT

@@ -1,0 +1,46 @@
+ulimit -n 4096
+
+. ~/dotfiles/modules/git
+
+# Bash colors
+
+## Usage
+## echo -e "\033[COLORm"
+##             or
+## printf "\e[COLORm"
+##
+## color escaping in PS1
+## \[\033[COLORm\]
+
+# Reset color 0
+
+## Regular Colors
+#         fg   bg
+#-----------------
+# Black   30   40
+# Red     31   41
+# Green   32   42
+# Yellow  33   43
+# Blue    34   44
+# Purple  35   45
+# Cyan    36   46
+# White   37   47
+
+reset='\[\[\e[0m\]';
+black='\[\e[0;30m\]';
+blue='\[\e[0;34m\]';
+cyan='\[\e[0;36m\]';
+green='\[\e[0;32m\]';
+orange='\[\e[0;33m\]';
+purple='\[\e[0;35m\]';
+red='\[\e[0;31m\]';
+violet='\[\e[0;35m\]';
+white='\[\e[0;37m\]';
+yellow='\[\e[0;33m\]';
+
+# Prompt
+PS1="${blue}\w "
+PS1+="\$(__prompt_git \"${white}\" \"${blue}\" \"${cyan}\" \"${yellow}\" \"${orange}\" \"${red}\")\n"
+PS1+="${blue} $ ${reset}"
+export PS1
+
