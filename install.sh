@@ -1,7 +1,7 @@
 #!/bin/sh
-mkdir .vim/backups
-mkdir .vim/swaps
-mkdir .vim/undo
+mkdir -p .vim/backups
+mkdir -p .vim/swaps
+mkdir -p .vim/undo
 
 echo ". ~/dotfiles/.bashrc" >> ~/.bash_profile
 source ~/.bash_profile
