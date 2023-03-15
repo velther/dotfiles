@@ -8,6 +8,9 @@ zle -N down-line-or-beginning-search
 autoload -Uz promptinit
 promptinit
 
+autoload -Uz compinit
+compinit
+
 . ~/dotfiles/modules/aliases
 . ~/dotfiles/modules/env
 . ~/dotfiles/modules/zconfig
